@@ -1,6 +1,6 @@
-# Arrow Electronics Embedding Project
+# Country of Origin Prediction/ embedding demo Red Hat Openshift AI
 
-A comprehensive demonstration of OpenShift AI for Arrow Electronics, showcasing country of origin prediction for electronic parts using BGE-Large embeddings and machine learning.
+A comprehensive demonstration of OpenShift AI, showcasing country of origin prediction for electronic parts using BGE-Large embeddings and machine learning.
 
 ## 🎯 Project Overview
 
@@ -32,7 +32,7 @@ The system analyzes part descriptions and predicts whether components originate 
 ## 📁 Project Structure
 
 ```
-arrow-embedding/
+embedding/
 ├── app/                          # Application code
 │   ├── data/                     # Dataset files
 │   │   ├── synthetic_electronics_parts_1k.csv
