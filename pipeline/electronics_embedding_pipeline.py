@@ -66,14 +66,17 @@ def load_and_prepare_data(
     if config_str:
         config = json.loads(config_str)
         import mlflow
-        os.environ['MLFLOW_TRACKING_URI'] = config['endpoint']
+        tracking_uri = config['endpoint']
+        if config.get('workspacesEnabled') and config.get('workspace'):
+            tracking_uri = tracking_uri.rstrip('/') + '/ns/' + config['workspace']
+        os.environ['MLFLOW_TRACKING_URI'] = tracking_uri
         os.environ['MLFLOW_TRACKING_INSECURE_TLS'] = 'true'
         token_path = '/var/run/secrets/kubernetes.io/serviceaccount/token'
         if os.path.exists(token_path):
             with open(token_path) as f:
                 os.environ['MLFLOW_TRACKING_TOKEN'] = f.read().strip()
         mlflow_run_id = config.get('parentRunId')
-        print(f"[MLflow] Connected, run_id={mlflow_run_id}")
+        print(f"[MLflow] Connected to {tracking_uri}, run_id={mlflow_run_id}")
 
     # Setup MinIO client
     s3_client = boto3.client(
@@ -175,14 +178,17 @@ def generate_embeddings(
     if config_str:
         config = json.loads(config_str)
         import mlflow
-        os.environ['MLFLOW_TRACKING_URI'] = config['endpoint']
+        tracking_uri = config['endpoint']
+        if config.get('workspacesEnabled') and config.get('workspace'):
+            tracking_uri = tracking_uri.rstrip('/') + '/ns/' + config['workspace']
+        os.environ['MLFLOW_TRACKING_URI'] = tracking_uri
         os.environ['MLFLOW_TRACKING_INSECURE_TLS'] = 'true'
         token_path = '/var/run/secrets/kubernetes.io/serviceaccount/token'
         if os.path.exists(token_path):
             with open(token_path) as f:
                 os.environ['MLFLOW_TRACKING_TOKEN'] = f.read().strip()
         mlflow_run_id = config.get('parentRunId')
-        print(f"[MLflow] Connected, run_id={mlflow_run_id}")
+        print(f"[MLflow] Connected to {tracking_uri}, run_id={mlflow_run_id}")
 
     # Load descriptions
     with open(descriptions.path, "rb") as f:
@@ -287,14 +293,17 @@ def train_model(
     if config_str:
         config = json.loads(config_str)
         import mlflow
-        os.environ['MLFLOW_TRACKING_URI'] = config['endpoint']
+        tracking_uri = config['endpoint']
+        if config.get('workspacesEnabled') and config.get('workspace'):
+            tracking_uri = tracking_uri.rstrip('/') + '/ns/' + config['workspace']
+        os.environ['MLFLOW_TRACKING_URI'] = tracking_uri
         os.environ['MLFLOW_TRACKING_INSECURE_TLS'] = 'true'
         token_path = '/var/run/secrets/kubernetes.io/serviceaccount/token'
         if os.path.exists(token_path):
             with open(token_path) as f:
                 os.environ['MLFLOW_TRACKING_TOKEN'] = f.read().strip()
         mlflow_run_id = config.get('parentRunId')
-        print(f"[MLflow] Connected, run_id={mlflow_run_id}")
+        print(f"[MLflow] Connected to {tracking_uri}, run_id={mlflow_run_id}")
 
     # Load embeddings and labels
     with open(embeddings.path, "rb") as f:
@@ -486,14 +495,17 @@ def evaluate_model(
     if config_str:
         config = json.loads(config_str)
         import mlflow
-        os.environ['MLFLOW_TRACKING_URI'] = config['endpoint']
+        tracking_uri = config['endpoint']
+        if config.get('workspacesEnabled') and config.get('workspace'):
+            tracking_uri = tracking_uri.rstrip('/') + '/ns/' + config['workspace']
+        os.environ['MLFLOW_TRACKING_URI'] = tracking_uri
         os.environ['MLFLOW_TRACKING_INSECURE_TLS'] = 'true'
         token_path = '/var/run/secrets/kubernetes.io/serviceaccount/token'
         if os.path.exists(token_path):
             with open(token_path) as f:
                 os.environ['MLFLOW_TRACKING_TOKEN'] = f.read().strip()
         mlflow_run_id = config.get('parentRunId')
-        print(f"[MLflow] Connected, run_id={mlflow_run_id}")
+        print(f"[MLflow] Connected to {tracking_uri}, run_id={mlflow_run_id}")
 
     # Load test results and label encoder
     with open(test_results.path, "rb") as f:
@@ -675,14 +687,17 @@ def predict_on_unseen_data(
     if config_str:
         config = json.loads(config_str)
         import mlflow
-        os.environ['MLFLOW_TRACKING_URI'] = config['endpoint']
+        tracking_uri = config['endpoint']
+        if config.get('workspacesEnabled') and config.get('workspace'):
+            tracking_uri = tracking_uri.rstrip('/') + '/ns/' + config['workspace']
+        os.environ['MLFLOW_TRACKING_URI'] = tracking_uri
         os.environ['MLFLOW_TRACKING_INSECURE_TLS'] = 'true'
         token_path = '/var/run/secrets/kubernetes.io/serviceaccount/token'
         if os.path.exists(token_path):
             with open(token_path) as f:
                 os.environ['MLFLOW_TRACKING_TOKEN'] = f.read().strip()
         mlflow_run_id = config.get('parentRunId')
-        print(f"[MLflow] Connected, run_id={mlflow_run_id}")
+        print(f"[MLflow] Connected to {tracking_uri}, run_id={mlflow_run_id}")
 
     # Setup MinIO client
     s3_client = boto3.client(
